@@ -1,0 +1,160 @@
+{
+	"info": {
+		"name": "WeSwap Login",
+		"_postman_id": "15637921-f83e-493a-06ff-656eba69bfec",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get request token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7b5dce41-2529-4400-b226-3664bdaeca51",
+						"type": "text/javascript",
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"console.log('Json Response : ', jsonData);",
+							"",
+							"let request_token = jsonData.data.requestToken;",
+							"",
+							"pm.environment.set(\"request_token\", request_token);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://wsapidev.weswap.com/2/authenticate?key={{KEY}}&signature={{SIG}}",
+					"protocol": "https",
+					"host": [
+						"wsapidev",
+						"weswap",
+						"com"
+					],
+					"path": [
+						"2",
+						"authenticate"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{KEY}}",
+							"equals": true
+						},
+						{
+							"key": "signature",
+							"value": "{{SIG}}",
+							"equals": true
+						}
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "Login using email and password",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a90934b6-d39f-40b1-b099-8f3856f2b78a",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"smoketester@mailinator.com\",\n  \"password\": \"Password1\",\n  \"requestToken\": \"{{request_token}}\"\n  \n}"
+				},
+				"url": {
+					"raw": "https://wsapidev.weswap.com/2/login/manual",
+					"protocol": "https",
+					"host": [
+						"wsapidev",
+						"weswap",
+						"com"
+					],
+					"path": [
+						"2",
+						"login",
+						"manual"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "Forgotten password",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\": \"jamquality@mailinator.com\"}"
+				},
+				"url": {
+					"raw": "https://wsapidev.weswap.com/2/login/forgottenpassword.on",
+					"protocol": "https",
+					"host": [
+						"wsapidev",
+						"weswap",
+						"com"
+					],
+					"path": [
+						"2",
+						"login",
+						"forgottenpassword.on"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2bce73e4-a0bf-4d07-a45c-db0a0da7d525",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "b39ce386-b861-4308-9a0b-07415d84e9c9",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
